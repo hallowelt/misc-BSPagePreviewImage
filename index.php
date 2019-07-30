@@ -1,19 +1,28 @@
 <?php
-$phantom_cmd = "/opt/phantomjs/bin/phantomjs --ignore-ssl-errors true /Users/oleksandrpinchuk/www/phantomjs/render.js";
-if(isset($_GET['url']) && isset($_GET['cookies'])) {
-	header("Content-type: image/png");
-	$url_ext = '';
-	foreach($_GET as $key => $value) {
-		if($key != "cookies" && $key != "url") {
-			$url_ext .= '&'.$key."=".$value;
-		}
-	}
-	$output = shell_exec("$phantom_cmd \"$_GET[url]$url_ext\" $_GET[cookies]");
-	echo base64_decode($output);
-}
-else {
-    http_response_code('405');
+
+include_once 'config.php';
+
+if( isset( $_GET['url'] ) && isset( $_GET['cookies'] ) ) {
+    $cookies = $_GET['cookies'];
+    $url = $_GET['url'];
+
+    unset($_GET['cookies']);
+    unset($_GET['url']);
+
+    $url = $url . '?' . http_build_query( $_GET );
+
+    $cmd = getPhantomJSCmd($config, $url, $cookies );
+
+    $output = shell_exec( $cmd );
+    header("Content-type: image/png");
+    echo base64_decode( $output );
+} else {
+    http_response_code( '405' );
     echo "<h1 align=\"center\">HTTP 405 Method not allowed</h1>";
 }
-?>
 
+
+function getPhantomJSCmd($config, $url, $cookies) {
+    $phantomCmd = $config[PHANTOMJS_LOCAL_PATH] . " --ignore-ssl-errors true " . $config[RENDER_JS_PATH];
+    return $phantomCmd . " " . $url . " " . $cookies;
+}
