@@ -9,9 +9,12 @@ if( isset( $_GET['url'] ) && isset( $_GET['cookies'] ) ) {
     unset($_GET['cookies']);
     unset($_GET['url']);
 
-    $url = $url . '?' . http_build_query( $_GET );
+    if(count($_GET) > 0 ) {
 
-    $cmd = getPhantomJSCmd($config, $url, $cookies );
+        $url = $url . '&' . http_build_query( $_GET );
+    }
+
+    $cmd = getPhantomJSCmd($config, utf8_encode($url), $cookies );
 
     $output = shell_exec( $cmd );
     header("Content-type: image/png");
@@ -24,5 +27,5 @@ if( isset( $_GET['url'] ) && isset( $_GET['cookies'] ) ) {
 
 function getPhantomJSCmd($config, $url, $cookies) {
     $phantomCmd = $config[PHANTOMJS_LOCAL_PATH] . " --ignore-ssl-errors true " . $config[RENDER_JS_PATH];
-    return $phantomCmd . " " . $url . " " . $cookies;
+    return $phantomCmd . " " . urldecode($url) . " " . $cookies;
 }
