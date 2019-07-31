@@ -6,21 +6,27 @@ if (system.args.length < 2) {
 }
 
 var targetUrl = system.args[1];
-var cookies = JSON.parse( window.atob( system.args[2] ) );
-var cookieDomain = system.args[3];
-var cookiePath = system.args[4];
 
 var page = require( 'webpage' ).create();
 page.viewportSize = { width: 1920, height: 1080 };
 
-for( var key in cookies ) {
-    page.addCookie( {
-        'name': key,
-        'value': cookies[key],
-        'domain': cookieDomain,
-        'path': cookiePath
-    } );
+
+if(system.args[2]) {
+    var cookies = JSON.parse( window.atob( system.args[2] ) );
+
+    var cookieDomain = system.args[3];
+    var cookiePath = system.args[4];
+
+    for( var key in cookies ) {
+        page.addCookie( {
+            'name': key,
+            'value': cookies[key],
+            'domain': cookieDomain,
+            'path': cookiePath
+        } );
+    }
 }
+
 
 page.open( targetUrl, function ( status ) {
     if( status === 'fail' ) {
