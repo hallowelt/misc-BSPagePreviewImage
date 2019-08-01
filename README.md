@@ -2,7 +2,7 @@
  
 You can use PhantomJS as web-service with this wrapper
 
-**Usage**
+# Usage #
 
 Send GET request with such parameters /?url={url}&cookies={cookies}
 
@@ -12,3 +12,9 @@ Send GET request with such parameters /?url={url}&cookies={cookies}
 
 
 response - PNG image or exception if something went wrong
+
+
+# Settings #
+
+/src/settings.php - here you can configure path to the local phantomjs application
+
