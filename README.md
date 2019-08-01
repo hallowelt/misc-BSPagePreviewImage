@@ -4,8 +4,6 @@ You can use PhantomJS as web-service with this wrapper
 
 # Usage #
 
-Application entrypoint: /public/index.php
-
 Send GET request with such parameters /?url={url}&cookies={cookies}
 
 **required {url}** - address of the page from that you want to get a screenshot
@@ -17,6 +15,8 @@ response - PNG image or exception if something went wrong
 
 
 # Settings #
+
+Application entrypoint: /public/index.php
 
 /src/settings.php - here you can configure path to the local phantomjs application
 
