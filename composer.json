@@ -1,5 +1,5 @@
 {
-    "name": "bluespice/bs-page-preview-image",
+    "name": "hallowelt/webservice-bspagepreviewimage",
     "description": "Wrapper for using phantomjs as a web service",
     "keywords": ["bluespice", "phantomjs"],
     "homepage": "https://github.com/hallowelt/misc-BSPagePreviewImage",
