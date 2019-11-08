@@ -36,7 +36,7 @@ return function (App $app) {
             '--ignore-ssl-errors',
             'true',
             realpath($phantomJsConfig['render_js_path']),
-            urldecode($url),
+            $url,
             $cookies
         ];
 
