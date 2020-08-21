@@ -28,6 +28,8 @@ return function (App $app) {
         if(count($params) > 0 ) {
             $url = $url . '&' . http_build_query( $params );
         }
+	
+	    $hostname = parse_url($url, PHP_URL_HOST);
 
         $phantomJsConfig = $container->settings->get('phantomjs');
 
@@ -37,7 +39,9 @@ return function (App $app) {
             'true',
             realpath($phantomJsConfig['render_js_path']),
             $url,
-            $cookies
+            $cookies,
+            $hostname,
+            "/"
         ];
 
         $process = new Process($phantomCmd);
